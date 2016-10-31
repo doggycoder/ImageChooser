@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wuwang.imagechooser.album.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:id="@+id/mImage" />
+    <View
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="10dp"
+        android:id="@+id/mFlag"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</com.wuwang.imagechooser.album.SquareRelativeLayout>
