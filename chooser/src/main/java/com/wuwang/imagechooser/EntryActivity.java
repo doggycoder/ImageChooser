@@ -16,13 +16,15 @@ import android.widget.TextView;
 
 import com.wuwang.imagechooser.album.AlbumEntry;
 import com.wuwang.imagechooser.album.AlbumFragment;
+import com.wuwang.imagechooser.album.FolderFragment;
+import com.wuwang.imagechooser.album.ImageFolder;
 
 import java.util.ArrayList;
 
 /**
  * Description:
  */
-public class EntryActivity extends FragmentActivity implements AlbumEntry.IAlbumShower{
+public class EntryActivity extends FragmentActivity{
 
     private AlbumEntry entry;
     private TextView mAlbumNum;
@@ -38,27 +40,12 @@ public class EntryActivity extends FragmentActivity implements AlbumEntry.IAlbum
                 entry.showAlbumChooser();
             }
         });
-        entry=new AlbumEntry(this, R.id.mEntry, new AlbumFragment(), this);
-    }
-
-
-    @Override
-    public void setAlbums(ArrayList albums) {
-
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public boolean isShowing() {
-        return false;
+        entry=new AlbumEntry(this, R.id.mEntry, new FolderFragment(), new AlbumFragment()){
+            @Override
+            public void onAlbumClick(ImageFolder folder) {
+                super.onAlbumClick(folder);
+                mAlbumNum.setText(folder.getName()+"("+folder.getCount()+")");
+            }
+        };
     }
 }

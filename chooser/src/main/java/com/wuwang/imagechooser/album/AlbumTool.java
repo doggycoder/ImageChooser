@@ -168,7 +168,10 @@ public class AlbumTool {
     private ImageFolder getFolder(Context context,ImageFolder folder) {
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor;
-        if(folder!=null&&folder.getDatas()!=null&&folder.getDatas().size()>0)return folder;
+        if(folder!=null&&folder.getDatas()!=null&&folder.getDatas().size()>0){
+            sendMessage(TYPE_FOLDER,folder);
+            return folder;
+        }
         if (folder == null) {
             return getNewestPhotos(context);
         } else {
