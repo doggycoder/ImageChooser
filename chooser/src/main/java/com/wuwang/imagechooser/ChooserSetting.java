@@ -39,4 +39,8 @@ public class ChooserSetting{
     /**最新图片集合的最大数量*/
     public static int newestAlbumSize=100;
 
+    public static int albumPopupHeight=600;
+
+    public static String tantoToast="";
+
 }

@@ -95,17 +95,13 @@ public class FolderAdapter extends BaseAdapter {
 
             //状态加载
             if(drawable!=null){
-                drawable.setState(info.state);
-                setBg(mFlag,drawable);
+                setBg(mFlag,drawable.get(info.state));
             }
         }
 
         private void setBg(View v, Drawable drawable){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                v.setBackground(drawable);
-            }else{
-                v.setBackgroundDrawable(drawable);
-            }
+            v.setBackgroundDrawable(null);
+            v.setBackgroundDrawable(drawable);
         }
     }
 

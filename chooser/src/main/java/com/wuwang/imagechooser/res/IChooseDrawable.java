@@ -8,52 +8,74 @@
 package com.wuwang.imagechooser.res;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.Shape;
+import android.support.annotation.NonNull;
+import android.util.SparseArray;
+
+import com.wuwang.utils.LogUtils;
 
 /**
  * Description:
  */
-public abstract class IChooseDrawable extends Drawable {
+public abstract class IChooseDrawable{
 
     private Paint paint;
-    private int state;
+    protected int width=0;
+    protected int height=0;
 
-    public IChooseDrawable(int state){
-        this.state=state;
+    private SparseArray<Drawable> drawables;
+
+    public IChooseDrawable(){
         paint=new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(0x88000000);
+        drawables=new SparseArray<>();
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        if(state==0){
-            drawUnChoose(canvas,paint);
+    public Drawable get(int state){
+        if(drawables.indexOfKey(state)>=0){
+            return drawables.get(state);
         }else{
-            drawChoose(canvas,paint,state);
+            InDrawable drawable=new InDrawable(state);
+            drawables.put(state,drawable);
+            return drawable;
         }
     }
 
-    public void setState(int state){
-        this.state=state;
-    }
+    public abstract void draw(Canvas canvas,Paint paint,int state);
 
-    public abstract void drawUnChoose(Canvas canvas,Paint paint);
-    public abstract void drawChoose(Canvas canvas,Paint paint,int state);
+    private class InDrawable extends Drawable{
 
-    @Override
-    public void setAlpha(int alpha) {
+        private int state=0;
 
-    }
+        InDrawable(int state){
+            this.state=state;
+        }
 
-    @Override
-    public void setColorFilter(ColorFilter colorFilter) {
+        @Override
+        public void draw(@NonNull Canvas canvas) {
+            IChooseDrawable.this.draw(canvas,paint,state);
+        }
 
-    }
+        @Override
+        public void setAlpha(int alpha) {
 
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSPARENT;
+        }
+
+        @Override
+        public void setColorFilter(ColorFilter colorFilter) {
+
+        }
+
+        @Override
+        public int getOpacity() {
+            return PixelFormat.TRANSPARENT;
+        }
     }
 }

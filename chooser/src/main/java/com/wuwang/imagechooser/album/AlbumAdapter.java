@@ -7,6 +7,7 @@
  */
 package com.wuwang.imagechooser.album;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,10 @@ import java.util.Locale;
 public class AlbumAdapter extends BaseAdapter {
 
     private ArrayList<ImageFolder> data;
-    private Fragment fragment;
+    private Context context;
 
-    public AlbumAdapter(Fragment fragment, ArrayList<ImageFolder> data){
-        this.fragment=fragment;
+    public AlbumAdapter(Context context, ArrayList<ImageFolder> data){
+        this.context=context;
         this.data=data;
     }
 
@@ -55,7 +56,7 @@ public class AlbumAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         FolderHolder holder;
         if(convertView==null){
-            convertView= LayoutInflater.from(fragment.getContext()).inflate(R.layout.item_album,parent,false);
+            convertView= LayoutInflater.from(context).inflate(R.layout.item_album,parent,false);
             holder=new FolderHolder(convertView);
         }else{
             holder= (FolderHolder) convertView.getTag();
@@ -75,7 +76,7 @@ public class AlbumAdapter extends BaseAdapter {
 
         void setData(ImageFolder folder){
             //图片加载
-            DrawableRequestBuilder r= Glide.with(fragment).load(folder.getFirstImagePath())
+            DrawableRequestBuilder r= Glide.with(context).load(folder.getFirstImagePath())
                     .error(ChooserSetting.errorResId)
                     .placeholder(ChooserSetting.placeResId);
             if(ChooserSetting.loadAnimateResId<=0){

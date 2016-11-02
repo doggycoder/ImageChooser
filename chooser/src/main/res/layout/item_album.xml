@@ -17,6 +17,7 @@
         android:layout_toEndOf="@id/mImage"
         android:lines="1"
         android:id="@+id/mInfo"
+        android:ellipsize="middle"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:textColor="#FF000000" />

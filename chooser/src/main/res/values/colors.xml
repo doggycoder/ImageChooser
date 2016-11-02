@@ -2,4 +2,5 @@
 <resources>
     <color name="theme_bg">#FFFFFFFF</color>
     <color name="theme_divider_color">#FFDDDDDD</color>
+    <color name="theme_focus">#FFFF8800</color>
 </resources>
