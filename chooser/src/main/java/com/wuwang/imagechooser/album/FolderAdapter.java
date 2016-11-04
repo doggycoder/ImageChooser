@@ -8,7 +8,6 @@
 package com.wuwang.imagechooser.album;
 
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,10 @@ public class FolderAdapter extends BaseAdapter {
         this.drawable=drawable;
     }
 
+    public void setChooseDrawable(IChooseDrawable drawable){
+        this.drawable=drawable;
+    }
+
     @Override
     public int getCount() {
         return data==null?0:data.size();
@@ -58,7 +61,7 @@ public class FolderAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageHolder holder;
         if(convertView==null){
-            convertView= LayoutInflater.from(fragment.getContext()).inflate(R.layout.item_image,parent,false);
+            convertView= LayoutInflater.from(fragment.getContext()).inflate(R.layout.image_chooser_item_image,parent,false);
             holder=new ImageHolder(convertView);
         }else{
             holder= (ImageHolder) convertView.getTag();
@@ -87,14 +90,14 @@ public class FolderAdapter extends BaseAdapter {
                 r.animate(ChooserSetting.loadAnimateResId);
             }
             r.into(mImage);
-            if(info.state<=0){
-                mImage.setColorFilter(ChooserSetting.unChooseFilter);
-            }else{
-                mImage.setColorFilter(ChooserSetting.chooseFilter);
-            }
 
             //状态加载
             if(drawable!=null){
+                if(info.state<=0){
+                    mImage.setColorFilter(ChooserSetting.unChooseFilter);
+                }else{
+                    mImage.setColorFilter(ChooserSetting.chooseFilter);
+                }
                 setBg(mFlag,drawable.get(info.state));
             }
         }

@@ -8,6 +8,9 @@
 package com.wuwang.imagechooser;
 
 
+import com.wuwang.imagechooser.res.CircleChooseDrawable;
+import com.wuwang.imagechooser.res.IChooseDrawable;
+
 /**
  * Description:
  */
@@ -28,7 +31,7 @@ public class ChooserSetting{
     public static int loadAnimateResId=0;
 
     /**选中图片的滤镜颜色*/
-    public static int chooseFilter=0;
+    public static int chooseFilter=0x55000000;
 
     /**未被选中的图片的滤镜颜色*/
     public static int unChooseFilter=0;
@@ -42,5 +45,8 @@ public class ChooserSetting{
     public static int albumPopupHeight=600;
 
     public static String tantoToast="";
+
+    /**照片选择指示器*/
+    public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF25c2e6);
 
 }

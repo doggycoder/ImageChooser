@@ -48,6 +48,15 @@ public abstract class IChooseDrawable{
         }
     }
 
+    public void clear(){
+        drawables.clear();
+    }
+
+    public int getBaseline(Paint paint,int top,int bottom){
+        Paint.FontMetrics i=paint.getFontMetrics();
+        return (int) ((bottom+top-i.top-i.bottom)/2);
+    }
+
     public abstract void draw(Canvas canvas,Paint paint,int state);
 
     private class InDrawable extends Drawable{

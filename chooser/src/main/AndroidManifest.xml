@@ -8,6 +8,10 @@
         android:supportsRtl="true">
         <activity android:name=".EntryActivity"
             android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.wuwang.album" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

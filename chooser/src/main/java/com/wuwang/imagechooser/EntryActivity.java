@@ -12,16 +12,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wuwang.imagechooser.album.AlbumEntry;
-import com.wuwang.imagechooser.album.AlbumFragment;
 import com.wuwang.imagechooser.album.AlbumPopup;
 import com.wuwang.imagechooser.album.FolderFragment;
 import com.wuwang.imagechooser.album.ImageFolder;
-
-import java.util.ArrayList;
 
 /**
  * Description:
@@ -34,7 +30,7 @@ public class EntryActivity extends FragmentActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry);
+        setContentView(R.layout.image_chooser_activity_entry);
         Rect outRect=new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect);
         ChooserSetting.albumPopupHeight=(int) (outRect.height()*0.6f);

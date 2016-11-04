@@ -8,7 +8,6 @@
 package com.wuwang.imagechooser.album;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class AlbumAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         FolderHolder holder;
         if(convertView==null){
-            convertView= LayoutInflater.from(context).inflate(R.layout.item_album,parent,false);
+            convertView= LayoutInflater.from(context).inflate(R.layout.image_chooser_item_album,parent,false);
             holder=new FolderHolder(convertView);
         }else{
             holder= (FolderHolder) convertView.getTag();

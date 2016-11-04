@@ -7,15 +7,15 @@
  */
 package com.wuwang.imagechooser.album;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.widget.Toast;
 
-import com.wuwang.imagechooser.abslayer.IAlpha;
+import com.wuwang.imagechooser.ChooserSetting;
+import com.wuwang.imagechooser.IcFinal;
 import com.wuwang.imagechooser.abslayer.IImageClickListener;
+import com.wuwang.imagechooser.res.IChooseDrawable;
 import com.wuwang.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -51,6 +51,19 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
         tool=new AlbumTool(activity);
         tool.setCallback(this);
         tool.findAlbumsAsync();
+
+        Intent intent=activity.getIntent();
+        setCrop(intent.getBooleanExtra(IcFinal.INTENT_IS_CROP,false));
+        if(isCrop()){
+            setMax(1);
+        }else{
+            setMax(intent.getIntExtra(IcFinal.INTENT_MAX_IMG,getMax()));
+        }
+        if(getMax()==1){
+            this.folderShower.setChooseDrawable(null);
+        }else{
+            this.folderShower.setChooseDrawable(ChooserSetting.chooseDrawable);
+        }
     }
 
     //显示相册选择器
@@ -104,6 +117,7 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
     }
 
     public interface IFolderShower{
+        void setChooseDrawable(IChooseDrawable drawable);
         void setFolder(ImageFolder folder);
         void setImageClickListener(IImageClickListener listener);
         Fragment getFragment();

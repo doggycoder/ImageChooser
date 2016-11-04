@@ -3,4 +3,6 @@
     <color name="theme_bg">#FFFFFFFF</color>
     <color name="theme_divider_color">#FFDDDDDD</color>
     <color name="theme_focus">#FFFF8800</color>
+
+    <color name="test">#FF25c2e6</color>
 </resources>

@@ -20,7 +20,7 @@ import com.wuwang.imagechooser.ChooserSetting;
 import com.wuwang.imagechooser.R;
 import com.wuwang.imagechooser.abslayer.IAlpha;
 import com.wuwang.imagechooser.abslayer.IImageClickListener;
-import com.wuwang.imagechooser.res.CircleChooseDrawable;
+import com.wuwang.imagechooser.res.IChooseDrawable;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -37,13 +37,13 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     private ArrayList<ImageInfo> data=new ArrayList<>();
     private Vector<ImageInfo> selectImgs;
     private IImageClickListener listener;
-    private int maxSize=9;
+    private IChooseDrawable drawable;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView==null){
-            rootView= (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.fragment_album,container,false);
+            rootView= (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.item_chooser_fragment_album,container,false);
             initView();
             initData();
         }
@@ -57,11 +57,15 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageInfo info=data.get(position);
-                if(info.state>0){
+                if(info.state>0){   //点击已经选择过得
                     boolean a=listener.onCancel(selectImgs,info);
                     if(!a){
                         info.state=0;
                         selectImgs.removeElement(info);
+                        int size=selectImgs.size();
+                        for(int i=0;i<size;i++){
+                            selectImgs.get(i).state=i+1;
+                        }
                     }
                 }else{
                     boolean b=listener.onAdd(selectImgs,info);
@@ -77,9 +81,17 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     }
 
     private void initData(){
-        adapter=new FolderAdapter(this,data,new CircleChooseDrawable());
+        adapter=new FolderAdapter(this,data,drawable);
         mGrid.setAdapter(adapter);
         selectImgs=new Vector<>();
+    }
+
+    @Override
+    public void setChooseDrawable(IChooseDrawable drawable) {
+        this.drawable=drawable;
+        if(adapter!=null){
+            adapter.setChooseDrawable(drawable);
+        }
     }
 
     @Override
@@ -90,6 +102,14 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
         }
         if(adapter!=null){
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(ChooserSetting.chooseDrawable!=null){
+            ChooserSetting.chooseDrawable.clear();
         }
     }
 

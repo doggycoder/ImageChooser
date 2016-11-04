@@ -8,20 +8,14 @@
 package com.wuwang.imagechooser.album;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 
 import com.wuwang.imagechooser.ChooserSetting;
 import com.wuwang.imagechooser.R;
@@ -52,7 +46,7 @@ public class AlbumPopup implements AlbumEntry.IAlbumShower{
     }
 
     private void createPopup(){
-        contentView= LayoutInflater.from(context).inflate(R.layout.fragment_folder,null);
+        contentView= LayoutInflater.from(context).inflate(R.layout.image_chooser_fragment_folder,null);
         window=new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(new ColorDrawable(0));
         window.setTouchable(true);

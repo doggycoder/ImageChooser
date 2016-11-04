@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="选择一张图片"
+        android:id="@+id/mOne"/>
+    <item android:title="裁剪一张图片"
+        android:id="@+id/mCrop" />
+    <item android:title="最多选九张"
+        android:id="@+id/mNine"/>
+</menu>
