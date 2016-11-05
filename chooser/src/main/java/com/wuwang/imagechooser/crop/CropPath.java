@@ -9,8 +9,8 @@ import android.graphics.Rect;
 
 public interface CropPath {
 
-    int SHAPE_RECT=0;
-    int SHAPE_CIRCLE=1;
+    int SHAPE_RECT=1;
+    int SHAPE_CIRCLE=2;
 
     //移动缩放操作范围
     Rect limit();

@@ -7,6 +7,7 @@
  */
 package com.wuwang.imagechooser.album;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -32,6 +33,8 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
     private IAlbumShower albumShower;
 
     private AlbumTool tool;
+
+    private final int REQ_CROP=0x10;
 
     public AlbumEntry(FragmentActivity activity, int containerId, IFolderShower fShower, IAlbumShower aShower){
         this.activity=activity;
@@ -97,11 +100,64 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
 
     @Override
     public boolean onAdd(List<ImageInfo> data, ImageInfo info) {
-        if(data.size()==getMax()){
-            Toast.makeText(activity,"无法继续选中",Toast.LENGTH_SHORT).show();
+        if(getMax()==1){
+            if(isCrop()){
+                Intent intent=new Intent(IcFinal.ACTION_CROP);
+                intent.putExtra(IcFinal.INTENT_CROP_DATA,info.path);
+                activity.startActivityForResult(intent,REQ_CROP);
+            }else{
+                Intent intent=new Intent();
+                ArrayList<String> result=new ArrayList<>();
+                result.add(info.path);
+                intent.putExtra(IcFinal.RESULT_DATA_IMG,result);
+                activity.setResult(Activity.RESULT_OK,intent);
+                activity.finish();
+            }
             return true;
+        }else{
+            if(data.size()==getMax()){
+                Toast.makeText(activity,"无法继续选中",Toast.LENGTH_SHORT).show();
+                return true;
+            }
         }
         return false;
+    }
+
+    public void chooseFinish(){
+        List<ImageInfo> res=folderShower.getSelectedImages();
+        int resSize=res.size();
+        if(resSize>0){
+            ArrayList<String> data=new ArrayList<>(resSize);
+            for (int i=0;i<resSize;i++){
+                data.add(res.get(i).path);
+            }
+            chooseFinish(data);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode==Activity.RESULT_OK){
+            if(requestCode==REQ_CROP){
+                chooseFinish(data.getStringExtra(IcFinal.RESULT_DATA_IMG));
+            }
+        }
+    }
+
+    private void chooseFinish(ArrayList<String> data){
+        if(data.size()>0){
+            Intent intent=new Intent();
+            intent.putExtra(IcFinal.RESULT_DATA_IMG,data);
+            activity.setResult(Activity.RESULT_OK,intent);
+            activity.finish();
+        }
+    }
+
+    private void chooseFinish(String data){
+        if(data!=null){
+            ArrayList<String> c=new ArrayList<>(1);
+            c.add(data);
+            chooseFinish(c);
+        }
     }
 
     @Override
@@ -120,6 +176,7 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
         void setChooseDrawable(IChooseDrawable drawable);
         void setFolder(ImageFolder folder);
         void setImageClickListener(IImageClickListener listener);
+        List<ImageInfo> getSelectedImages();
         Fragment getFragment();
     }
 

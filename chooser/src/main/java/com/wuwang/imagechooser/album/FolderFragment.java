@@ -23,6 +23,7 @@ import com.wuwang.imagechooser.abslayer.IImageClickListener;
 import com.wuwang.imagechooser.res.IChooseDrawable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -43,7 +44,7 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView==null){
-            rootView= (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.item_chooser_fragment_album,container,false);
+            rootView= (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.image_chooser_fragment_album,container,false);
             initView();
             initData();
         }
@@ -116,6 +117,11 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     @Override
     public void setImageClickListener(IImageClickListener listener) {
         this.listener=listener;
+    }
+
+    @Override
+    public List<ImageInfo> getSelectedImages() {
+        return selectImgs;
     }
 
     @Override

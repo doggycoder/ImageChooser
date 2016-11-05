@@ -17,7 +17,7 @@ import android.support.annotation.NonNull;
  * Created by wuwang on 2016/10/25
  */
 
-public class CropCoverDrawable extends Drawable implements CropPath {
+public class CropCoverDrawable extends ICropCoverDrawable {
 
     private Paint paint;
     private Rect rect;
@@ -40,11 +40,12 @@ public class CropCoverDrawable extends Drawable implements CropPath {
     private void paintInit(){
         paint=new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(0xAA000000);
+        paint.setColor(0x88000000);
     }
 
-    public void setShape(int shape){
+    public CropCoverDrawable setShape(int shape){
         this.shape=shape;
+        return this;
     }
 
     public void setShadowColor(int color){

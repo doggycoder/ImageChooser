@@ -1,15 +1,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wuwang.imagechooser">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application android:allowBackup="true" android:label="@string/app_name"
-        android:supportsRtl="true">
+        tools:replace="android:theme"
+        android:supportsRtl="true" android:theme="@style/ImageChooser">
         <activity android:name=".EntryActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.wuwang.album" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".crop.CropActivity"
+            android:screenOrientation="portrait"  >
+            <intent-filter>
+                <action android:name="android.intent.action.wuwang.crop" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

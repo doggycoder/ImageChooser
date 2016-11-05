@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent=new Intent("android.intent.action.album");
+        Intent intent=new Intent(IcFinal.ACTION_ALBUM);
         switch (item.getItemId()){
             case R.id.mOne:
                 intent.putExtra(IcFinal.INTENT_MAX_IMG,1);
@@ -45,5 +45,15 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivityForResult(intent,1);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            adapter.data.clear();
+            adapter.data.addAll(data.getStringArrayListExtra(IcFinal.RESULT_DATA_IMG));
+            adapter.notifyDataSetChanged();
+        }
     }
 }
