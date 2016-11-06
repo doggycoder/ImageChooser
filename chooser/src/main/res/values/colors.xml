@@ -5,4 +5,6 @@
     <color name="theme_focus">#FFFF8800</color>
 
     <color name="test">#FF25c2e6</color>
+
+    <color name="backIconColor">#FFFFFFFF</color>
 </resources>

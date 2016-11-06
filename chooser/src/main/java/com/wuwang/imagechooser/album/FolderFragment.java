@@ -100,6 +100,17 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
         if(data!=null){
             data.clear();
             data.addAll(folder.getDatas());
+            int size=data.size();
+            for (ImageInfo s:selectImgs){
+                for(int i=0;i<size;i++){
+                    ImageInfo info=data.get(i);
+                    if(info.state==0&&info.path.equals(s.path)){
+                        data.remove(i);
+                        data.add(i,s);
+                        break;
+                    }
+                }
+            }
         }
         if(adapter!=null){
             adapter.notifyDataSetChanged();

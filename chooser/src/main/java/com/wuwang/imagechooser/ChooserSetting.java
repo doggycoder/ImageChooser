@@ -25,7 +25,7 @@ public class ChooserSetting{
     public static int errorResId=0;
 
     /**图片加载的占位图片*/
-    public static int placeResId=0;
+    public static int placeResId=R.mipmap.image_chooser_placeholder;
 
     /**图片加载的动画*/
     public static int loadAnimateResId=0;
