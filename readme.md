@@ -54,7 +54,7 @@ public static String tantoToast="";
 /**照片选择指示器*/
 public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF25c2e6);
 ```
-如果这些也无法满足你的UI要求，你也可以参照EntryActivity重新写相册的入口Activity和参照CropActivity重写裁剪的入口Activity。
+如果这些也无法满足你的UI要求，你也可以参照EntryActivity重新写相册的入口Activity，参照CropActivity重写裁剪的入口Activity。
 
 # 更新说明
 
@@ -64,10 +64,10 @@ public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF2
 2. 图片裁剪功能
 
 ## 待完成工作
-~~1. 图片单选多选~~
-~~2. 多图选择指示器~~
-~~3. 图片裁剪~~
-~~4. 裁剪形状的完全定制~~
+1. ~~图片单选多选~~
+2. ~~多图选择指示器~~
+3. ~~图片裁剪~~
+4. 裁剪形状的完全定制
 4. 多图选择时的大图浏览
 5. 拍照功能
 6. UI让使用者可高度定制
