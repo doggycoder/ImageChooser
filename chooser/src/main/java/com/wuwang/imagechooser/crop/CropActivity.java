@@ -1,5 +1,6 @@
 package com.wuwang.imagechooser.crop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +12,8 @@ import android.view.View;
 import com.wuwang.imagechooser.IcFinal;
 import com.wuwang.imagechooser.R;
 import com.wuwang.utils.LogUtils;
+
+import java.io.IOException;
 
 /**
  * Description:
@@ -58,7 +61,16 @@ public class CropActivity extends FragmentActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId()==R.id.mSure){
-                    finish();
+                    String file=getFilesDir().getAbsolutePath()+"/temp.jpg";
+                    try {
+                        cropFragment.crop(file);
+                        Intent intent=new Intent();
+                        intent.putExtra(IcFinal.RESULT_DATA_IMG,file);
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return false;
             }

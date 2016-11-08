@@ -22,7 +22,7 @@ import java.util.concurrent.Semaphore;
 public class AlbumTool {
 
     private Handler handler;
-    private Semaphore semaphore;
+    //private Semaphore semaphore;
     private Callback callback;
     private Context context;
 
@@ -31,7 +31,6 @@ public class AlbumTool {
 
     public AlbumTool(Context context){
         this.context=context;
-        semaphore=new Semaphore(1);
         handler=new Handler(Looper.getMainLooper()){
             @Override
             public void handleMessage(Message msg) {
@@ -45,7 +44,6 @@ public class AlbumTool {
                             break;
                     }
                 }
-                semaphore.release();
                 super.handleMessage(msg);
             }
         };
@@ -198,15 +196,10 @@ public class AlbumTool {
     }
 
     private void sendMessage(int what,Object obj){
-        try {
-            semaphore.acquire();
-            Message msg=new Message();
-            msg.what=what;
-            msg.obj=obj;
-            handler.sendMessage(msg);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Message msg=new Message();
+        msg.what=what;
+        msg.obj=obj;
+        handler.sendMessage(msg);
     }
 
     public interface Callback{

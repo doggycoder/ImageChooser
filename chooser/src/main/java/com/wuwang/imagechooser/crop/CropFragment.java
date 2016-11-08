@@ -19,6 +19,7 @@ import com.bumptech.glide.request.target.Target;
 import com.wuwang.imagechooser.R;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by wuwang on 2016/11/4
@@ -99,5 +100,8 @@ public class CropFragment extends Fragment {
         this.ready=runnable;
     }
 
+    public void crop(String path) throws IOException {
+        helper.cropAndSave(path);
+    }
 
 }
