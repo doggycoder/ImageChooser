@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.wuwang.imagechooser.ChooserSetting;
 import com.wuwang.imagechooser.IcFinal;
 import com.wuwang.imagechooser.R;
 import com.wuwang.utils.LogUtils;
@@ -46,6 +47,7 @@ public class CropActivity extends FragmentActivity {
 
     public void setTitle(){
         toolbar= (Toolbar) findViewById(R.id.mTitle);
+        toolbar.setBackgroundColor(ChooserSetting.TITLE_COLOR);
         toolbar.setTitle("裁剪图片");
         toolbar.setNavigationIcon(R.mipmap.image_chooser_back);
         toolbar.setContentInsetStartWithNavigation(0);

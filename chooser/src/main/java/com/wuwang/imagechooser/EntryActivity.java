@@ -91,6 +91,7 @@ public class EntryActivity extends FragmentActivity{
 
     private void setTitle(){
         toolbar= (Toolbar) findViewById(R.id.mTitle);
+        toolbar.setBackgroundColor(ChooserSetting.TITLE_COLOR);
         toolbar.setTitle("图片选择");
         toolbar.setNavigationIcon(R.mipmap.image_chooser_back);
         toolbar.setContentInsetStartWithNavigation(0);

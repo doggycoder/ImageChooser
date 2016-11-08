@@ -9,7 +9,8 @@ import com.wuwang.imagechooser.res.IChooseDrawable;
  */
 public class ChooserSetting{
 
-    public static int TITLE_COLOR;
+    /**标题的背景颜色*/
+    public static int TITLE_COLOR=0xFF0dc6e2;
 
     /**图片选择页，每行显示数*/
     public static int NUM_COLUMNS=3;

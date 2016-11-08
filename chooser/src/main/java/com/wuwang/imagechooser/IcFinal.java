@@ -10,7 +10,9 @@ public class IcFinal {
     public static final String INTENT_IS_CROP="ic_final_is_crop";
     public static final String INTENT_CROP_WIDTH="ic_final_crop_width";
     public static final String INTENT_CROP_HEIGHT="ic_final_crop_height";
+    public static final String INTENT_CROP_SHAPE="ic_final_crop_shape";
     public static final String INTENT_CROP_DATA="ic_final_crop_data";
+    public static final String INTENT_CROP_COVER="ic_final_crop_set";
 
     public static final String RESULT_DATA_IMG="ic_final_img";
 
