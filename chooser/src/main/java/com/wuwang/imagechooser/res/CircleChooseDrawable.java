@@ -1,10 +1,3 @@
-/*
- *
- * CircleChooseDrawable.java
- * 
- * Created by Wuwang on 2016/11/2
- * Copyright © 2016年 深圳哎吖科技. All rights reserved.
- */
 package com.wuwang.imagechooser.res;
 
 import android.graphics.Canvas;
