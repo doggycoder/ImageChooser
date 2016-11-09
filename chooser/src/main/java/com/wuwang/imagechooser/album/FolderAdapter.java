@@ -25,6 +25,9 @@ public class FolderAdapter extends BaseAdapter {
     private Fragment fragment;
     public ArrayList<ImageInfo> data;
 
+    private final int TYPE_DEFAULT=0;
+    private final int TYPE_TAKEPIC=1;
+
     public FolderAdapter(Fragment fragment, ArrayList<ImageInfo> data, IChooseDrawable drawable){
         this.fragment=fragment;
         this.data=data;
@@ -51,15 +54,34 @@ public class FolderAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ImageHolder holder;
-        if(convertView==null){
-            convertView= LayoutInflater.from(fragment.getContext()).inflate(R.layout.image_chooser_item_image,parent,false);
-            holder=new ImageHolder(convertView);
-        }else{
-            holder= (ImageHolder) convertView.getTag();
+    public int getItemViewType(int position) {
+        if(position==0&&ChooserSetting.takePhotoType!=ChooserSetting.TP_NONE){
+            return TYPE_TAKEPIC;
         }
-        holder.setData(data.get(position));
+        return TYPE_DEFAULT;
+    }
+
+    public boolean isTakePhoto(int position){
+        return getItemViewType(position)==TYPE_TAKEPIC;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if(getItemViewType(position)==TYPE_TAKEPIC){
+            convertView= LayoutInflater.from(fragment.getContext()).inflate(R.layout.image_chooser_item_camera,parent,false);
+            if(ChooserSetting.tackPhotoIcon>0){
+                ((ImageView)convertView).setImageResource(ChooserSetting.tackPhotoIcon);
+            }
+        }else{
+            ImageHolder holder;
+            if(convertView==null||convertView.getTag()==null){
+                convertView= LayoutInflater.from(fragment.getContext()).inflate(R.layout.image_chooser_item_image,parent,false);
+                holder=new ImageHolder(convertView);
+            }else{
+                holder= (ImageHolder) convertView.getTag();
+            }
+            holder.setData(data.get(position));
+        }
         return convertView;
     }
 

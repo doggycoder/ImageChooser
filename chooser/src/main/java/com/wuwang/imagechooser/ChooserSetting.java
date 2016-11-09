@@ -9,6 +9,10 @@ import com.wuwang.imagechooser.res.IChooseDrawable;
  */
 public class ChooserSetting{
 
+    public static final int TP_SYSTEM=0;
+    public static final int TP_CUSTOM=1;
+    public static final int TP_NONE=2;
+
     /**标题的背景颜色*/
     public static int TITLE_COLOR=0xFF0dc6e2;
 
@@ -23,6 +27,11 @@ public class ChooserSetting{
 
     /**图片加载的动画*/
     public static int loadAnimateResId=0;
+
+    /**拍照设置*/
+    public static int takePhotoType=TP_SYSTEM;
+
+    public static int tackPhotoIcon=0;
 
     /**选中图片的滤镜颜色*/
     public static int chooseFilter=0x55000000;
