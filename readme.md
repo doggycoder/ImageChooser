@@ -61,7 +61,8 @@ public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF2
 ## 已完成功能
 1. 图片单选多选功能
 2. 多图选择指示器
-2. 图片裁剪功能
+3. 图片裁剪功能
+4. 拍照功能
 
 ## 待完成工作
 1. ~~图片单选多选~~
@@ -69,7 +70,10 @@ public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF2
 3. ~~图片裁剪~~
 4. 裁剪形状的完全定制
 4. 多图选择时的大图浏览
-5. 拍照功能
+5. ~~拍照功能~~
 6. UI让使用者可高度定制
 7. 加入到jcenter和maven
 8. 拍照的美颜及其他滤镜
+
+## 20161111更新
+基本完成相册选择、拍照、裁剪功能
