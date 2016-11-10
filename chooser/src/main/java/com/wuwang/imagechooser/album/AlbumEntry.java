@@ -91,13 +91,17 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
         cancelAlbumChooser();
     }
 
+    public void crop(String path){
+        Intent intent=new Intent(IcFinal.ACTION_CROP);
+        intent.putExtra(IcFinal.INTENT_CROP_DATA,path);
+        activity.startActivityForResult(intent,REQ_CROP);
+    }
+
     @Override
     public boolean onAdd(List<ImageInfo> data, ImageInfo info) {
         if(getMax()==1){
             if(isCrop()){
-                Intent intent=new Intent(IcFinal.ACTION_CROP);
-                intent.putExtra(IcFinal.INTENT_CROP_DATA,info.path);
-                activity.startActivityForResult(intent,REQ_CROP);
+                crop(info.path);
             }else{
                 Intent intent=new Intent();
                 ArrayList<String> result=new ArrayList<>();

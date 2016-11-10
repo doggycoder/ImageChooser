@@ -1,6 +1,8 @@
 package com.wuwang.imagechooser;
 
 
+import android.os.Environment;
+
 import com.wuwang.imagechooser.res.CircleChooseDrawable;
 import com.wuwang.imagechooser.res.IChooseDrawable;
 
@@ -8,6 +10,7 @@ import com.wuwang.imagechooser.res.IChooseDrawable;
  * Description:
  */
 public class ChooserSetting{
+
 
     public static final int TP_SYSTEM=0;
     public static final int TP_CUSTOM=1;
@@ -51,5 +54,8 @@ public class ChooserSetting{
 
     /**照片选择指示器*/
     public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF25c2e6);
+
+    /**临时文件存储位置*/
+    public static String tempFolder= Environment.getExternalStorageDirectory().getAbsolutePath()+"/Wuwang/";
 
 }

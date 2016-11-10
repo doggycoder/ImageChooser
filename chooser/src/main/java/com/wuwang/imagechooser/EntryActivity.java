@@ -1,30 +1,41 @@
 package com.wuwang.imagechooser;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.wuwang.imagechooser.abslayer.IPhotoShoot;
 import com.wuwang.imagechooser.album.AlbumEntry;
 import com.wuwang.imagechooser.album.AlbumPopup;
 import com.wuwang.imagechooser.album.FolderFragment;
 import com.wuwang.imagechooser.album.ImageFolder;
 import com.wuwang.imagechooser.album.ImageInfo;
+import com.wuwang.utils.LogUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Description:
  */
-public class EntryActivity extends FragmentActivity{
+public class EntryActivity extends FragmentActivity implements IPhotoShoot{
 
     private AlbumEntry entry;
     private Toolbar toolbar;
     private MenuItem mSure;
+
+    private String tackPicStr;
+    private static final int REQ_TACK_PIC=0x15;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class EntryActivity extends FragmentActivity{
 //            }
 //        });
         FolderFragment m=new FolderFragment();
+        m.setPhotoShoot(this);
         entry=new AlbumEntry(this, R.id.mEntry, m, new AlbumPopup(this,toolbar,m)){
             @Override
             public void onAlbumClick(ImageFolder folder) {
@@ -112,6 +124,42 @@ public class EntryActivity extends FragmentActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.e("result-"+resultCode+"/"+requestCode);
         entry.onActivityResult(requestCode, resultCode, data);
+        if(resultCode== Activity.RESULT_OK){
+            if(requestCode==REQ_TACK_PIC){
+                //Bitmap bmp= (Bitmap) data.getExtras().get("data");
+                LogUtils.e("result-->??"+tackPicStr);
+                //TODO 上面所设置的路径
+                if(entry.isCrop()){
+                    entry.crop(tackPicStr);
+                }else{
+                    Intent intent=new Intent();
+                    ArrayList<String> d=new ArrayList<>();
+                    d.add(tackPicStr);
+                    intent.putExtra(IcFinal.RESULT_DATA_IMG,d);
+                    setResult(Activity.RESULT_OK,intent);
+                    finish();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void takePhoto() {
+        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //TODO 传入保存路径直接保存
+        tackPicStr=ChooserSetting.tempFolder+"photo/"+System.currentTimeMillis()+".jpg";
+        File folder=new File(ChooserSetting.tempFolder+"photo/");
+        if(!folder.exists()){
+            if(!folder.mkdirs()){
+                Toast.makeText(this,"无法拍照",Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        File file = new File(tackPicStr);
+        Uri imageUri = Uri.fromFile(file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent,REQ_TACK_PIC);
     }
 }

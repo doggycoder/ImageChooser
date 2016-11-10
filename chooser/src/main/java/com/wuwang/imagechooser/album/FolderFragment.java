@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.EnvironmentCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,13 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.wuwang.imagechooser.ChooserSetting;
+import com.wuwang.imagechooser.IcFinal;
 import com.wuwang.imagechooser.R;
 import com.wuwang.imagechooser.abslayer.IAlpha;
 import com.wuwang.imagechooser.abslayer.IImageClickListener;
+import com.wuwang.imagechooser.abslayer.IPhotoShoot;
 import com.wuwang.imagechooser.res.IChooseDrawable;
+import com.wuwang.utils.LogUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,8 +44,7 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     private Vector<ImageInfo> selectImgs;
     private IImageClickListener listener;
     private IChooseDrawable drawable;
-
-    private static final int REQ_TACK_PIC=10;
+    private IPhotoShoot photoShoot;
 
     @Nullable
     @Override
@@ -61,12 +64,9 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(adapter.isTakePhoto(position)){
-                    Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    //TODO 传入保存路径直接保存
-//                    File file = new File(path);
-//                    Uri imageUri = Uri.fromFile(file );
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(intent,REQ_TACK_PIC);
+                    if(photoShoot!=null){
+                        photoShoot.takePhoto();
+                    }
                 }else{
                     ImageInfo info=data.get(position);
                     if(info.state>0){   //点击已经选择过得
@@ -93,21 +93,14 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
         mCover=rootView.findViewById(R.id.mCover);
     }
 
+    public void setPhotoShoot(IPhotoShoot photoShoot){
+        this.photoShoot=photoShoot;
+    }
+
     private void initData(){
         adapter=new FolderAdapter(this,data,drawable);
         mGrid.setAdapter(adapter);
         selectImgs=new Vector<>();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==Activity.RESULT_OK){
-            if(requestCode==REQ_TACK_PIC){
-                //Bitmap bmp= (Bitmap) data.getExtras().get("data");
-                //TODO 上面所设置的路径
-            }
-        }
     }
 
     @Override
