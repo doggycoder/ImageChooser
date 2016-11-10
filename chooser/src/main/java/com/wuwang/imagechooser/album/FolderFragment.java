@@ -115,6 +115,9 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     public void setFolder(ImageFolder folder) {
         if(data!=null){
             data.clear();
+            if(ChooserSetting.takePhotoType!=ChooserSetting.TP_NONE){
+                data.add(new ImageInfo());
+            }
             data.addAll(folder.getDatas());
             int size=data.size();
             for (ImageInfo s:selectImgs){

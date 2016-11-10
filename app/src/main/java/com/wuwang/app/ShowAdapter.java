@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ShowAdapter extends BaseAdapter {
         if(convertView==null){
             convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.image_chooser_item_image,parent,false);
             ImageView iv= (ImageView) convertView.findViewById(R.id.mImage);
-            Glide.with(parent.getContext()).load(data.get(position)).into(iv);
+            Glide.with(parent.getContext()).load(data.get(position)).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(iv);
             convertView.setTag(iv);
         }else{
             Glide.with(parent.getContext()).load(data.get(position)).into((ImageView) convertView.getTag());

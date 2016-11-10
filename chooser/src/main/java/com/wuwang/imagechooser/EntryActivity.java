@@ -1,8 +1,17 @@
 package com.wuwang.imagechooser;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.database.ContentObserver;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,12 +25,14 @@ import android.widget.Toast;
 import com.wuwang.imagechooser.abslayer.IPhotoShoot;
 import com.wuwang.imagechooser.album.AlbumEntry;
 import com.wuwang.imagechooser.album.AlbumPopup;
+import com.wuwang.imagechooser.album.AlbumTool;
 import com.wuwang.imagechooser.album.FolderFragment;
 import com.wuwang.imagechooser.album.ImageFolder;
 import com.wuwang.imagechooser.album.ImageInfo;
 import com.wuwang.utils.LogUtils;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +103,17 @@ public class EntryActivity extends FragmentActivity implements IPhotoShoot{
         }else{
             toolbar.getMenu().getItem(1).setVisible(false);
         }
+
+//        IntentFilter filter=new IntentFilter(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        registerReceiver(receiver,filter);
     }
+
+    BroadcastReceiver receiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            entry.refreshData();
+        }
+    };
 
     private void setTitle(){
         toolbar= (Toolbar) findViewById(R.id.mTitle);
@@ -129,8 +150,10 @@ public class EntryActivity extends FragmentActivity implements IPhotoShoot{
         if(resultCode== Activity.RESULT_OK){
             if(requestCode==REQ_TACK_PIC){
                 //Bitmap bmp= (Bitmap) data.getExtras().get("data");
-                LogUtils.e("result-->??"+tackPicStr);
-                //TODO 上面所设置的路径
+                //让拍摄的图片可以在相册目录中出现
+
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(tackPicStr))));
+
                 if(entry.isCrop()){
                     entry.crop(tackPicStr);
                 }else{
@@ -143,6 +166,12 @@ public class EntryActivity extends FragmentActivity implements IPhotoShoot{
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        unregisterReceiver(receiver);
     }
 
     @Override
@@ -162,4 +191,5 @@ public class EntryActivity extends FragmentActivity implements IPhotoShoot{
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent,REQ_TACK_PIC);
     }
+
 }

@@ -62,6 +62,10 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
         }
     }
 
+    public void refreshData(){
+        tool.findAlbumsAsync();
+    }
+
     //显示相册选择器
     public void showAlbumChooser(){
         LogUtils.e("显示相册选择器");

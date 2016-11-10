@@ -28,6 +28,8 @@ public class FolderAdapter extends BaseAdapter {
     private final int TYPE_DEFAULT=0;
     private final int TYPE_TAKEPIC=1;
 
+    private boolean isTackPhoto=ChooserSetting.takePhotoType!=ChooserSetting.TP_NONE;
+
     public FolderAdapter(Fragment fragment, ArrayList<ImageInfo> data, IChooseDrawable drawable){
         this.fragment=fragment;
         this.data=data;
@@ -55,7 +57,7 @@ public class FolderAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0&&ChooserSetting.takePhotoType!=ChooserSetting.TP_NONE){
+        if(position==0&&isTackPhoto){
             return TYPE_TAKEPIC;
         }
         return TYPE_DEFAULT;

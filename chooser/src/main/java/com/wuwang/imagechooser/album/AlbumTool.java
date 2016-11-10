@@ -191,6 +191,7 @@ public class AlbumTool {
             }
             cursor.close();
         }
+        folder.setCount(datas.size());
         sendMessage(TYPE_FOLDER,folder);
         return folder;
     }
