@@ -25,14 +25,12 @@ import android.widget.Toast;
 import com.wuwang.imagechooser.abslayer.IPhotoShoot;
 import com.wuwang.imagechooser.album.AlbumEntry;
 import com.wuwang.imagechooser.album.AlbumPopup;
-import com.wuwang.imagechooser.album.AlbumTool;
 import com.wuwang.imagechooser.album.FolderFragment;
 import com.wuwang.imagechooser.album.ImageFolder;
 import com.wuwang.imagechooser.album.ImageInfo;
 import com.wuwang.utils.LogUtils;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +69,7 @@ public class EntryActivity extends FragmentActivity implements IPhotoShoot{
 //        });
         FolderFragment m=new FolderFragment();
         m.setPhotoShoot(this);
+        m.setSelectImgs(getIntent().getStringArrayListExtra(IcFinal.INTENT_EXIST_DATA));
         entry=new AlbumEntry(this, R.id.mEntry, m, new AlbumPopup(this,toolbar,m)){
             @Override
             public void onAlbumClick(ImageFolder folder) {

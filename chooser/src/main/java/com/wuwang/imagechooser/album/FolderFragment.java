@@ -46,6 +46,8 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
     private IChooseDrawable drawable;
     private IPhotoShoot photoShoot;
 
+    private List<String> initSelect;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,10 +99,23 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
         this.photoShoot=photoShoot;
     }
 
+    public void setSelectImgs(List<String> data){
+        initSelect=data;
+    }
+
     private void initData(){
         adapter=new FolderAdapter(this,data,drawable);
         mGrid.setAdapter(adapter);
         selectImgs=new Vector<>();
+        if(initSelect!=null){
+            int size=initSelect.size();
+            for (int i=0;i<size;i++){
+                ImageInfo info=new ImageInfo();
+                info.path=initSelect.get(i);
+                info.state=i+1;
+                selectImgs.add(info);
+            }
+        }
     }
 
     @Override
@@ -123,7 +138,7 @@ public class FolderFragment extends Fragment implements AlbumEntry.IFolderShower
             for (ImageInfo s:selectImgs){
                 for(int i=0;i<size;i++){
                     ImageInfo info=data.get(i);
-                    if(info.state==0&&info.path.equals(s.path)){
+                    if(info.state==0&&info.path!=null&&info.path.equals(s.path)){
                         data.remove(i);
                         data.add(i,s);
                         break;

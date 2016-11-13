@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GridView mGrid;
     private ShowAdapter adapter;
+    private boolean flag;       //多选flag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        flag=false;
         Intent intent=new Intent(IcFinal.ACTION_ALBUM);
         switch (item.getItemId()){
             case R.id.mOne:
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mNine:
                 intent.putExtra(IcFinal.INTENT_MAX_IMG,9);
+                if(flag){
+                    intent.putStringArrayListExtra(IcFinal.INTENT_EXIST_DATA,adapter.data);
+                }
+                flag=true;
                 break;
             case R.id.mCrop:
                 intent.putExtra(IcFinal.INTENT_IS_CROP,true);

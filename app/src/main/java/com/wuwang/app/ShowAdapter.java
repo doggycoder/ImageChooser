@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ShowAdapter extends BaseAdapter {
 
-    public List<String> data=new ArrayList<>();
+    public ArrayList<String> data=new ArrayList<>();
 
     public ShowAdapter(){
     }

@@ -11,10 +11,15 @@ intent.putExtra(IcFinal.INTENT_MAX_IMG,1);
 startActivityForResult(intent,1);
 ```
 ### 选择多张图片
+多选时，只需将IcFinal.INTENT_MAX_IMG的值设置你需要的值即可：
 ```java
 Intent intent=new Intent(IcFinal.ACTION_ALBUM);
 intent.putExtra(IcFinal.INTENT_MAX_IMG,9);
 startActivityForResult(intent,1);
+```
+如果你需要支持选择完成后，可以再次对之前选择的内容做修改，你可以增加：
+```java
+intent.putStringArrayListExtra(IcFinal.INTENT_EXIST_DATA,data); //data为你之前所选的图片路径的ArrayList
 ```
 ### 裁剪
 如果需要选择单张图片并且裁剪，调用：
@@ -92,3 +97,4 @@ public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF2
 
 ## 20161113更新
 实现裁剪形状的完全定制入口
+完成对多选后再次修改的支持
