@@ -20,6 +20,7 @@ import com.wuwang.imagechooser.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 
 /**
  * Created by wuwang on 2016/11/4
@@ -31,7 +32,7 @@ public class CropFragment extends Fragment {
     private ImageView mImage;
     private View mCover;
 
-    private ICropCoverDrawable bg;
+    private ACropCoverDrawable bg;
     private CropHelper helper;
     private Runnable ready;
 
@@ -46,11 +47,13 @@ public class CropFragment extends Fragment {
         return f;
     }
 
-    public static CropFragment newFragment(String path,ICropCoverDrawable cover){
+    public static CropFragment newFragment(String path,String dName,int dParam){
         CropFragment f=new CropFragment();
         Bundle b=new Bundle();
         b.putString("path",path);
-        b.putSerializable("cover",cover);
+//        b.putSerializable("cover",cover);
+        b.putString("name",dName);
+        b.putInt("param",dParam);
         f.setArguments(b);
         return f;
     }
@@ -89,7 +92,13 @@ public class CropFragment extends Fragment {
             bg=new CropCoverDrawable(b.getInt("width",500),b.getInt("height",500))
                     .setShape(b.getInt("shape"));
         }else{
-            bg= (ICropCoverDrawable) b.getSerializable("cover");
+            try {
+                Class<ACropCoverDrawable> clazz= (Class<ACropCoverDrawable>) Class.forName(b.getString("name"));
+                Constructor<ACropCoverDrawable> constructor=clazz.getConstructor(int.class);
+                bg= constructor.newInstance(b.getInt("param"));
+            } catch (Exception e) {
+                throw new RuntimeException("Please set INTENT_CROP_COVER with a object name extends ACropCoverDrawable",e);
+            }
         }
         mCover.setBackgroundDrawable(bg);
         helper=new CropHelper().attractTo(mImage);

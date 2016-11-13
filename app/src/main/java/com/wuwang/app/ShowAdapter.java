@@ -46,7 +46,7 @@ public class ShowAdapter extends BaseAdapter {
             Glide.with(parent.getContext()).load(data.get(position)).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(iv);
             convertView.setTag(iv);
         }else{
-            Glide.with(parent.getContext()).load(data.get(position)).into((ImageView) convertView.getTag());
+            Glide.with(parent.getContext()).load(data.get(position)).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into((ImageView) convertView.getTag());
         }
         return convertView;
     }

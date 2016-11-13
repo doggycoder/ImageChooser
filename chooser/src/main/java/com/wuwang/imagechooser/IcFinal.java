@@ -13,6 +13,7 @@ public class IcFinal {
     public static final String INTENT_CROP_SHAPE="ic_final_crop_shape";
     public static final String INTENT_CROP_DATA="ic_final_crop_data";
     public static final String INTENT_CROP_COVER="ic_final_crop_set";
+    public static final String INTENT_CROP_PARAM="ic_final_crop_param";
 
     public static final String RESULT_DATA_IMG="ic_final_img";
 

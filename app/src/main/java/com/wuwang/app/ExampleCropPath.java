@@ -1,4 +1,4 @@
-package com.wuwang.imagechooser.crop;
+package com.wuwang.app;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,67 +9,46 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
+
+import com.wuwang.imagechooser.crop.ACropCoverDrawable;
 
 /**
- * Created by wuwang on 2016/10/25
+ * Created by wuwang on 2016/11/13
  */
 
-public class CropCoverDrawable extends ACropCoverDrawable {
+public class ExampleCropPath extends ACropCoverDrawable{
 
-    private Paint paint;
+    Paint paint;
     private Rect rect;
-    private int width,height;
-    private int shape;
     private Path cropPath;
 
-    public CropCoverDrawable(int width,int height){
+    public ExampleCropPath(int param){
         super(0);
-        this.width=width;
-        this.height=height;
-        paintInit();
-    }
-
-    public CropCoverDrawable(int shape,int x,int y,int width,int height){
-        super(0);
-        this.shape=shape;
-        rect=new Rect(x-width/2,y-height/2,x+width/2,y+height/2);
-        paintInit();
-    }
-
-    private void paintInit(){
         paint=new Paint();
         paint.setAntiAlias(true);
         paint.setColor(0x88000000);
     }
 
-    public CropCoverDrawable setShape(int shape){
-        this.shape=shape;
-        return this;
-    }
-
-    public void setShadowColor(int color){
-        paint.setColor(color);
-    }
-
     @Override
-    public void draw(@NonNull Canvas canvas) {
+    public void draw(Canvas canvas) {
         int cWidth=canvas.getWidth();
         int cHeight=canvas.getHeight();
         if(rect==null){
-            rect=new Rect(cWidth/2-width/2,cHeight/2-height/2,cWidth/2+width/2,cHeight/2+height/2);
+            rect=new Rect(cWidth/6,cHeight/2-cWidth/3,cWidth*5/6,cHeight/2+cWidth/3);
         }
         canvas.drawColor(Color.TRANSPARENT);
         Path path=new Path();
         path.addRect(0,0,cWidth,cHeight, Path.Direction.CW);
         cropPath=new Path();
-        if(shape==SHAPE_RECT){
-            cropPath.addRect(rect.left,rect.top,rect.right,rect.bottom, Path.Direction.CW);
-        }else if(shape==SHAPE_CIRCLE){
-            cropPath.addCircle(rect.centerX(),rect.centerY(),rect.width()/2, Path.Direction.CW);
-        }
+        cropPath.moveTo(rect.left,rect.top+rect.height()/4);
+        cropPath.lineTo(rect.left+rect.width()/4,rect.top);
+        cropPath.lineTo(rect.right-rect.width()/4,rect.top);
+        cropPath.lineTo(rect.right,rect.top+rect.height()/4);
+        cropPath.lineTo(rect.right,rect.centerY());
+        cropPath.quadTo(rect.right,rect.bottom,rect.centerX(),rect.bottom);
+        cropPath.quadTo(rect.left,rect.bottom,rect.left,rect.centerY());
+        cropPath.close();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             path.op(cropPath, Path.Op.DIFFERENCE);        //可以抗锯齿
             canvas.drawPath(path,paint);

@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="选择一张图片"
         android:id="@+id/mOne"/>
-    <item android:title="裁剪一张图片"
+    <item android:title="裁圆图"
         android:id="@+id/mCrop" />
+    <item android:title="裁方图"
+        android:id="@+id/mCrop2" />
+    <item android:title="裁自定义图"
+        android:id="@+id/mCrop3" />
     <item android:title="最多选九张"
         android:id="@+id/mNine"/>
 </menu>

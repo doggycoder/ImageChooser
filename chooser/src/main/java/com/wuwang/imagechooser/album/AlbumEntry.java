@@ -25,6 +25,8 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
     private IFolderShower folderShower;
     private IAlbumShower albumShower;
 
+    private Intent actIntent;
+
     private AlbumTool tool;
 
     private final int REQ_CROP=0x10;
@@ -48,12 +50,12 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
         tool.setCallback(this);
         tool.findAlbumsAsync();
 
-        Intent intent=activity.getIntent();
-        setCrop(intent.getBooleanExtra(IcFinal.INTENT_IS_CROP,false));
+        actIntent=activity.getIntent();
+        setCrop(actIntent.getBooleanExtra(IcFinal.INTENT_IS_CROP,false));
         if(isCrop()){
             setMax(1);
         }else{
-            setMax(intent.getIntExtra(IcFinal.INTENT_MAX_IMG,getMax()));
+            setMax(actIntent.getIntExtra(IcFinal.INTENT_MAX_IMG,getMax()));
         }
         if(getMax()==1){
             this.folderShower.setChooseDrawable(null);
@@ -96,8 +98,17 @@ public class AlbumEntry extends AbsAlbumEntry implements AlbumTool.Callback,IAlb
     }
 
     public void crop(String path){
+        int shape=actIntent.getIntExtra(IcFinal.INTENT_CROP_SHAPE,0);
         Intent intent=new Intent(IcFinal.ACTION_CROP);
         intent.putExtra(IcFinal.INTENT_CROP_DATA,path);
+        intent.putExtra(IcFinal.INTENT_CROP_SHAPE,shape);
+        if(shape==0){
+            intent.putExtra(IcFinal.INTENT_CROP_COVER,actIntent.getStringExtra(IcFinal.INTENT_CROP_COVER));
+            intent.putExtra(IcFinal.INTENT_CROP_PARAM,actIntent.getIntExtra(IcFinal.INTENT_CROP_PARAM,0));
+        }else{
+            intent.putExtra(IcFinal.INTENT_CROP_WIDTH,actIntent.getIntExtra(IcFinal.INTENT_CROP_WIDTH,500));
+            intent.putExtra(IcFinal.INTENT_CROP_HEIGHT,actIntent.getIntExtra(IcFinal.INTENT_CROP_HEIGHT,500));
+        }
         activity.startActivityForResult(intent,REQ_CROP);
     }
 

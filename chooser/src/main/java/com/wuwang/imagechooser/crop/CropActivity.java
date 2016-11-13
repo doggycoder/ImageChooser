@@ -23,17 +23,33 @@ public class CropActivity extends FragmentActivity {
 
     private Toolbar toolbar;
     private CropFragment cropFragment;
+    private int shape;
+    private int width;
+    private int height;
+    private String drawableName;
+    private int drawableParam;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_chooser_activity_crop);
         setTitle();
-        LogUtils.e("wuang",getIntent().getStringExtra(IcFinal.INTENT_CROP_DATA));
-        cropFragment=CropFragment.newFragment(
-                getIntent().getStringExtra(IcFinal.INTENT_CROP_DATA),
-                CropPath.SHAPE_CIRCLE,
-                500,500);
+        initByIntent();
+    }
+
+    public void initByIntent(){
+        Intent intent=getIntent();
+        String data=intent.getStringExtra(IcFinal.INTENT_CROP_DATA);
+        shape=intent.getIntExtra(IcFinal.INTENT_CROP_SHAPE,0);
+        if(shape==0){
+            drawableName= intent.getStringExtra(IcFinal.INTENT_CROP_COVER);
+            drawableParam=intent.getIntExtra(IcFinal.INTENT_CROP_PARAM,0);
+            cropFragment=CropFragment.newFragment(data,drawableName,drawableParam);
+        }else if(shape==CropPath.SHAPE_CIRCLE||shape==CropPath.SHAPE_RECT){
+            width=intent.getIntExtra(IcFinal.INTENT_CROP_WIDTH,400);
+            height=intent.getIntExtra(IcFinal.INTENT_CROP_HEIGHT,400);
+            cropFragment=CropFragment.newFragment(data,shape,width,height);
+        }
         cropFragment.setOnReadyRunnable(new Runnable() {
             @Override
             public void run() {

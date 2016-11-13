@@ -3,12 +3,15 @@ package com.wuwang.app;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.wuwang.imagechooser.EntryActivity;
 import com.wuwang.imagechooser.IcFinal;
+import com.wuwang.imagechooser.crop.CropPath;
+import com.wuwang.utils.LogUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +44,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mCrop:
                 intent.putExtra(IcFinal.INTENT_IS_CROP,true);
+                intent.putExtra(IcFinal.INTENT_CROP_SHAPE, CropPath.SHAPE_CIRCLE);
+                intent.putExtra(IcFinal.INTENT_CROP_WIDTH,500);
+                intent.putExtra(IcFinal.INTENT_CROP_HEIGHT,500);
+                break;
+            case R.id.mCrop2:
+                intent.putExtra(IcFinal.INTENT_IS_CROP,true);
+                intent.putExtra(IcFinal.INTENT_CROP_SHAPE, CropPath.SHAPE_RECT);
+                intent.putExtra(IcFinal.INTENT_CROP_WIDTH,500);
+                intent.putExtra(IcFinal.INTENT_CROP_HEIGHT,500);
+                break;
+            case R.id.mCrop3:
+                LogUtils.e("wuwang",ExampleCropPath.class.getName());
+                intent.putExtra(IcFinal.INTENT_IS_CROP,true);
+                intent.putExtra(IcFinal.INTENT_CROP_COVER,ExampleCropPath.class.getName());
+                intent.putExtra(IcFinal.INTENT_CROP_PARAM,1);
                 break;
         }
         startActivityForResult(intent,1);
