@@ -96,5 +96,5 @@ public static IChooseDrawable chooseDrawable=new CircleChooseDrawable(true,0xFF2
 基本完成相册选择、拍照、裁剪功能
 
 ## 20161113更新
-实现裁剪形状的完全定制入口
-完成对多选后再次修改的支持
+1. 实现裁剪形状的完全定制入口
+2. 完成对多选后再次修改的支持
